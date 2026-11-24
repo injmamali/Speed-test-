@@ -1,82 +1,80 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SpeedTest Pro</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#06110d">
+  <meta name="description" content="A futuristic internet speed test dashboard.">
+  <title>NEON//SPEED — Internet Diagnostics</title>
+  <link rel="preconnect" href="https://speed.cloudflare.com">
   <link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
-  <div class="container">
-
-    <header>
-      <div class="logo">Speed<span>Test</span></div>
-      <p>Internet Speed Test</p>
+  <div class="ambient ambient-one"></div><div class="ambient ambient-two"></div>
+  <div class="scanlines" aria-hidden="true"></div>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="#top" aria-label="Neon Speed home"><span class="brand-mark"><i></i><i></i><i></i></span><span>NEON<span class="brand-accent">//SPEED</span><small>NETWORK DIAGNOSTICS</small></span></a>
+      <div class="top-status"><span class="live-dot"></span><span id="connectionLabel">SYSTEM ONLINE</span><span class="version">V 2.0</span></div>
     </header>
 
-    <main class="card">
+    <main id="top">
+      <section class="hero-intro">
+        <div class="eyebrow"><span class="eyebrow-line"></span> PERFORMANCE SCANNER <span class="eyebrow-line"></span></div>
+        <h1>KNOW YOUR <span>SPEED.</span></h1>
+        <p>Precision network diagnostics. No guesswork. Just data.</p>
+      </section>
 
-      <div class="gauge">
-        <div class="gauge-inner">
-          <div id="speed">0</div>
-          <small>Mbps</small>
+      <section class="dashboard" aria-label="Internet speed test">
+        <div class="panel main-panel">
+          <div class="panel-top"><span class="panel-label"><span class="tiny-pulse"></span> LIVE ANALYSIS</span><span class="session-id" id="sessionId">SESSION // READY</span></div>
+          <div class="scanner-layout">
+            <div class="robot-wrap" aria-label="Animated friendly robot mascot">
+              <div class="robot-aura"></div>
+              <div class="robot">
+                <div class="antenna"><i></i></div>
+                <div class="robot-head">
+                  <div class="ear ear-left"></div><div class="ear ear-right"></div>
+                  <div class="face"><div class="brow"></div><div class="eyes"><i></i><i></i></div><div class="mouth"></div><div class="cheek cheek-left"></div><div class="cheek cheek-right"></div></div>
+                </div>
+                <div class="neck"></div>
+                <div class="robot-body"><div class="chest-core"><span></span></div><div class="chest-lines"><i></i><i></i><i></i></div></div>
+                <div class="arm arm-left"></div><div class="arm arm-right"></div>
+              </div>
+              <div class="robot-caption"><span class="live-dot"></span><span id="robotMood">READY TO SCAN</span></div>
+            </div>
+            <div class="meter-area">
+              <div class="meter" id="meter" style="--progress:0deg" role="img" aria-label="Speed meter">
+                <div class="meter-inner"><span class="meter-overline">CURRENT SPEED</span><strong id="speedValue">0.0</strong><span class="meter-unit">Mbps</span><span class="meter-state" id="meterState">STANDBY</span></div>
+              </div>
+              <div class="phase-track"><span id="phaseFill"></span></div>
+              <div class="phase-labels"><span id="phaseText">Awaiting command</span><span id="phasePercent">0%</span></div>
+            </div>
+          </div>
+          <div class="status-line" aria-live="polite"><span class="status-icon" id="statusIcon">⌁</span><span id="statusText">Your system is ready. Start a scan to measure your connection.</span></div>
+          <div class="action-row"><button class="start-button" id="startBtn"><span class="button-icon">▶</span><span id="buttonText">INITIATE SPEED TEST</span><span class="button-arrow">↗</span></button><button class="stop-button" id="stopBtn" disabled>STOP</button></div>
+          <p class="micro-note"><span>✦</span> Uses Cloudflare's public speed test endpoint. Results vary with network conditions.</p>
         </div>
-      </div>
 
-      <div class="status" id="status">
-        Ready to test
-      </div>
+        <aside class="side-column">
+          <div class="panel robot-info"><div class="panel-label">AI DIAGNOSTIC UNIT</div><div class="unit-title">N-01 <span>ACTIVE</span></div><p>Network analysis assistant is standing by to inspect your connection.</p><div class="unit-wave"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="unit-footer"><span>CORE TEMP</span><strong>32°C</strong><span class="unit-ok">NORMAL</span></div></div>
+          <div class="panel network-panel"><div class="panel-label">NETWORK PROFILE</div><div class="network-row"><span>Connection type</span><strong id="networkType">Detecting…</strong></div><div class="network-row"><span>Effective type</span><strong id="effectiveType">—</strong></div><div class="network-row"><span>Downlink estimate</span><strong id="downlinkEstimate">—</strong></div><div class="network-row"><span>Data saver</span><strong id="saveData">—</strong></div></div>
+        </aside>
+      </section>
 
-      <button id="startBtn">START TEST</button>
-
-      <div class="results">
-
-        <div class="result-box">
-          <div class="icon">↓</div>
-          <span>Download</span>
-          <strong id="download">--</strong>
-          <small>Mbps</small>
+      <section class="metrics-section"><div class="section-heading"><div><span class="eyebrow-left">SCAN OUTPUT</span><h2>PERFORMANCE <span>METRICS</span></h2></div><span class="metrics-tag">UNIT // Mbps · ms</span></div>
+        <div class="metrics-grid">
+          <article class="metric-card download-card"><div class="metric-top"><span class="metric-symbol">↓</span><span class="metric-name">DOWNLOAD</span><span class="metric-indicator"></span></div><div class="metric-value"><strong id="downloadValue">—</strong><small>Mbps</small></div><div class="metric-desc">How fast data reaches your device</div><div class="metric-bar"><i id="downloadBar"></i></div></article>
+          <article class="metric-card upload-card"><div class="metric-top"><span class="metric-symbol">↑</span><span class="metric-name">UPLOAD</span><span class="metric-indicator"></span></div><div class="metric-value"><strong id="uploadValue">—</strong><small>Mbps</small></div><div class="metric-desc">How fast data leaves your device</div><div class="metric-bar"><i id="uploadBar"></i></div></article>
+          <article class="metric-card ping-card"><div class="metric-top"><span class="metric-symbol">⌁</span><span class="metric-name">PING / LATENCY</span><span class="metric-indicator"></span></div><div class="metric-value"><strong id="pingValue">—</strong><small>ms</small></div><div class="metric-desc">Response time to the test server</div><div class="metric-bar"><i id="pingBar"></i></div></article>
         </div>
+      </section>
 
-        <div class="result-box">
-          <div class="icon">↑</div>
-          <span>Upload</span>
-          <strong id="upload">--</strong>
-          <small>Mbps</small>
-        </div>
-
-        <div class="result-box">
-          <div class="icon">⌁</div>
-          <span>Ping</span>
-          <strong id="ping">--</strong>
-          <small>ms</small>
-        </div>
-
-      </div>
-
-      <div class="server">
-        <span>Server</span>
-        <strong id="server">Auto Select</strong>
-      </div>
-
+      <section class="bottom-grid"><div class="panel server-panel"><div class="panel-label">TEST SERVER</div><div class="server-main"><span class="server-icon">⌖</span><div><strong id="serverName">Cloudflare Speed Test</strong><small id="serverDetail">Public edge network · Auto route</small></div><span class="server-badge">AUTO</span></div><div class="server-foot"><span>PROTOCOL</span><strong>HTTPS / HTTP/2*</strong><span class="server-separator">•</span><span>MODE</span><strong>LIVE MEASUREMENT</strong></div></div>
+        <div class="panel result-panel"><div class="result-head"><div class="panel-label">SCAN SUMMARY</div><button id="copyBtn" class="copy-button" disabled>▣ COPY REPORT</button></div><p id="summaryText">Your latest scan report will appear here.</p><div class="result-foot"><span id="lastTest">LAST SCAN // NOT RUN</span><span id="resultQuality">AWAITING DATA</span></div></div></section>
     </main>
-
-    
-<footer class="footer">
-  <div class="footer-line"></div>
-
-  <p>
-    Designed & Developed by
-    <span>Injmam Ali</span>
-  </p>
-
-  <small>© 2026 SpeedTest Pro. All rights reserved.</small>
-</footer>
-    
+    <footer><div class="footer-line"></div><div class="footer-content"><span>NEON<span class="brand-accent">//SPEED</span> <small>© 2026</small></span><span>DESIGNED & DEVELOPED BY <strong>INJMAM ALI</strong></span><span class="footer-status"><i></i> ALL SYSTEMS NOMINAL</span></div><p class="disclaimer">Measurements are estimates and depend on your device, Wi-Fi, ISP, browser and current network load. *Protocol is negotiated by your browser.</p></footer>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
